@@ -6,15 +6,24 @@ const KakaoCallback = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('[🧪 MOCK 테스트 시작] axios 요청 중...');
+    const code = new URLSearchParams(window.location.search).get('code');
+    const redirectUri = 'http://localhost:3000/oauth/callback/kakao';
 
-    // ✅ 조건문 없이 무조건 실행
-    axios.get('http://localhost:4001/login')
+    console.log('[🔍 디버깅] 현재 URL:', window.location.href);
+    console.log('[🔍 디버깅] 추출된 code:', code);
+    console.log('[🔍 디버깅] redirectUri:', redirectUri);
+
+    if (code) {
+      console.log('[🚀 요청 시작] 백엔드로 POST 요청 중...');
+      axios.post('https://likelion-yonsei.shop/login', {
+        code,
+        redirectUri,
+      })
       .then((res) => {
-        console.log('[✅ MOCK 응답 수신]', res.data);
+        console.log('[✅ 응답 수신]', res);
 
-        const accessToken = res.data.authorization;
-        const refreshToken = res.data.refreshToken;
+        const accessToken = res.headers['authorization'];
+        const refreshToken = res.headers['refreshtoken'];
 
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
@@ -23,11 +32,14 @@ const KakaoCallback = () => {
         navigate('/home');
       })
       .catch((err) => {
-        console.error('[❌ MOCK 요청 실패]', err);
+        console.error('[❌ 요청 실패]', err);
       });
+    } else {
+      console.warn('[⚠️ 경고] URL에 code 파라미터가 없습니다.');
+    }
   }, [navigate]);
 
-  return <div>로그인 중입니다... (mock)</div>;
+  return <div>로그인 중입니다... (실제 백엔드)</div>;
 };
 
 export default KakaoCallback;
