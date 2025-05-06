@@ -1,7 +1,7 @@
 import React from 'react';
 
 const KAKAO_REST_API_KEY = '90667b555f7cee12aa381be1d24a87e5';
-const REDIRECT_URI = 'http://localhost:5173/oauth/callback/kakao';
+const REDIRECT_URI = 'http://localhost:3000/oauth/callback/kakao';
 
 const KakaoLoginButton = () => {
   const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
