@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+# 🔐 Kakao Login Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+카카오 로그인을 연동한 React 기반 로그인 시스템입니다.  
+mock 서버와 실서버를 통한 두 가지 방식의 로그인 흐름을 구현하고 테스트하였습니다.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🗂️ 브랜치 구조
 
-### `npm start`
+| 브랜치명 | 설명 |
+|----------|------|
+| `main` | 배포/운영 가능한 최종 코드 |
+| `feature/kakao-login-mock` | mock 서버 기반 카카오 로그인 테스트용 |
+| `feature/kakao-login-live` | 실제 백엔드 연동 및 인가 코드 전달 구현 |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## ✅ 기능 요약
 
-### `npm test`
+### 1. 카카오 로그인 버튼
+- 카카오 OAuth 인증 페이지로 리다이렉션
+- 성공 시 인가 코드 포함하여 콜백 URI로 리턴
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. `/oauth/callback/kakao` 페이지 처리
+- 인가 코드 추출 후 백엔드로 POST 전송
+- 백엔드 응답에서 JWT 토큰 추출
+- 토큰을 localStorage에 저장
+- 저장 후 `/home` 페이지로 navigate
 
-### `npm run build`
+### 3. `/home` 페이지
+- 로그인 성공 후 진입
+- 저장된 accessToken, refreshToken을 console에 출력
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🧪 Mock 테스트 흐름 (json-server 활용)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `mock.json` 파일을 통해 local 서버에서 테스트 가능
+- 실행 명령:
+  ```bash
+  json-server --watch mock.json --port 4001
