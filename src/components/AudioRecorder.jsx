@@ -1,3 +1,4 @@
+// components/AudioRecorder.jsx
 import React, { useState, useRef } from 'react';
 
 const AudioRecorder = ({ onSave }) => {
@@ -21,7 +22,7 @@ const AudioRecorder = ({ onSave }) => {
       audioChunks.current = [];
       const audioUrl = URL.createObjectURL(audioBlob);
       setAudioURL(audioUrl);
-      onSave(audioBlob);
+      onSave(audioBlob); // 🔥 녹음된 Blob을 onSave에 전달
     };
 
     mediaRecorder.current.start();
