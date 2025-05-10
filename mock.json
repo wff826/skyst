@@ -1,0 +1,7 @@
+{
+    "login": {
+      "authorization": "Bearer MOCK_ACCESS_TOKEN",
+      "refreshToken": "MOCK_REFRESH_TOKEN"
+    }
+  }
+  
